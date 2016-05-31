@@ -192,6 +192,9 @@ node_modules/
 bower_components/
 orleans.codegen.cs
 
+# Website wwwroot folder
+wwwroot/
+
 # RIA/Silverlight projects
 Generated_Code/
 
