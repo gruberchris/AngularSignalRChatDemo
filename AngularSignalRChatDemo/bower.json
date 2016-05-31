@@ -1,0 +1,10 @@
+{
+  "name": "AngularSignalRChatDemo",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "*",
+    "jquery-validation-unobtrusive": "*",
+    "modernizr": "*",
+    "respond": "*"
+  }
+}
