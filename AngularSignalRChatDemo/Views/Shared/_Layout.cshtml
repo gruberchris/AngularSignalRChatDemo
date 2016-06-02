@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link rel="stylesheet" href="~/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/lib/angular-toastr/dist/angular-toastr.css" />
     <link rel="stylesheet" href="~/wwwroot/css/site.min.css" />
 </head>
 <body>
@@ -36,7 +37,11 @@
     </div>
 
     <script src="~/wwwroot/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/lib/angular/angular.min.js"></script>
+    <script src="~/wwwroot/lib/angular-route/angular-route.min.js"></script>
+    <script src="~/wwwroot/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/wwwroot/lib/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+    <script src="~/wwwroot/js/site.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
