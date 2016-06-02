@@ -1,3 +1,31 @@
-﻿<p>
-  <h3>Main Controller</h3>
-</p>
+﻿<div class="container">
+  <div class="row" style="padding-top:40px;">
+    <div class="col-md-8">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Recent Chat History
+        </div>
+        <div class="panel-body">
+          <ul class="media-list" data-ng-repeat="message in main.messages">
+            <li class="media">
+              <div class="media-body">
+                {{message.MessageText}}
+                <br />
+                <small class="text-muted">{{message.CreateDateTime}}</small>
+                <hr />
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="panel-footer">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter Message" data-ng-model="main.messageText" />
+            <span class="input-group-btn">
+              <button class="btn btn-info active" type="button" data-ng-click="main.onSendButtonClick(main.messageText)">SEND</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,24 @@
 ﻿export class MainController {
-  constructor (toastr) {
+  constructor (toastr, InstantMessage, $location, $scope) {
     'ngInject';
 
     this.toastr = toastr;
+    this.InstantMessage = InstantMessage;
+    this.$location = $location;
+    this.$scope = $scope;
+
+    this.messages = InstantMessage.query();
   }
 
-  showToastr() {
-    this.toastr.info('Fork <a href="https://github.com/Swiip/generator-gulp-angular" target="_blank"><b>generator-gulp-angular</b></a>');
-    this.classAnimation = '';
+  onSendButtonClick(messageText) {
+    let message = {
+      MessageText: messageText
+    };
+
+    let scope = this.$scope;
+
+    this.InstantMessage.save(message, function() {
+      scope.messageText = '';
+    });
   }
 }

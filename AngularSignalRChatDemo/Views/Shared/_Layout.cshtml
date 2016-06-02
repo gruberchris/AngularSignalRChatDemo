@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Angular SignalR Chat Demonstration</title>
     <link rel="stylesheet" href="~/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/wwwroot/lib/angular-toastr/dist/angular-toastr.css" />
     <link rel="stylesheet" href="~/wwwroot/css/site.min.css" />
@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Angular-SignalR Chat Demo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -32,13 +32,14 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Angular SignalR Chat Demonstration</p>
         </footer>
     </div>
 
     <script src="~/wwwroot/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/wwwroot/lib/angular/angular.min.js"></script>
     <script src="~/wwwroot/lib/angular-route/angular-route.min.js"></script>
+    <script src="~/wwwroot/lib/angular-resource/angular-resource.min.js"></script>
     <script src="~/wwwroot/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="~/wwwroot/lib/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
     <script src="~/wwwroot/js/site.min.js"></script>
