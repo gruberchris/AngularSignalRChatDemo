@@ -69,7 +69,6 @@ gulp.task("clean", ["clean:js", "clean:css", "clean:weblib"]);
 gulp.task("min:js", function () {
   return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
       .pipe(sourcemaps.init())
-      //.pipe(babel())
       .pipe(webpack({
         module: {
           loaders: [{
@@ -83,7 +82,7 @@ gulp.task("min:js", function () {
       .pipe(concat(paths.concatJsDest))
       .pipe(uglify().on("error", errrorHandler("Uglify")))
       .pipe(sourcemaps.write("."))
-      
+
       .pipe(gulp.dest("."));
 });
 
