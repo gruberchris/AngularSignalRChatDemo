@@ -18,7 +18,7 @@
     let scope = this.$scope;
 
     this.InstantMessage.save(message, function() {
-      scope.messageText = '';
+      scope.main.messageText = '';
     });
   }
 }
