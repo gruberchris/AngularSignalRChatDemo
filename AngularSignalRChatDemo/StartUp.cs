@@ -6,11 +6,11 @@ using System.Web;
 
 namespace AngularSignalRChatDemo
 {
-    public class Startup
-    {
-        public void Configuration(IAppBuilder app)
-        {
-            app.MapSignalR();
-        }
-    }
+	public class Startup
+	{
+		public void Configuration(IAppBuilder app)
+		{
+			app.MapSignalR();
+		}
+	}
 }

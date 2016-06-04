@@ -8,119 +8,101 @@ Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 "use strict";
 
 var gulp = require("gulp"),
-		rimraf = require("rimraf"),
-		concat = require("gulp-concat"),
-		cssmin = require("gulp-cssmin"),
-		uglify = require("gulp-uglify"),
-		eslint = require("gulp-eslint"),
-		mainBowerFiles = require("gulp-main-bower-files"),
-		gutil = require("gulp-util"),
-		gulpFilter = require("gulp-filter"),
-		rename = require("gulp-rename"),
-		webpack = require("webpack-stream");
-
-var webroot = "./wwwroot/",
-		clientroot = "./Scripts/app/",
-		sitecontent = "./Content/"
+    rimraf = require("rimraf"),
+    concat = require("gulp-concat"),
+    cssmin = require("gulp-cssmin"),
+    uglify = require("gulp-uglify"),
+    mainBowerFiles = require("gulp-main-bower-files"),
+    gutil = require("gulp-util"),
+    gulpFilter = require("gulp-filter"),
+    rename = require("gulp-rename"),
+    webpack = require("webpack-stream"),
+    webpackConfig = require("./webpack.config.js");
 
 var paths = {
-	js: clientroot + "**/*.js",
-	minJs: clientroot + "**/*.min.js",
-	css: clientroot + "**/*.css",
-	minCss: clientroot + "**/*.min.css",
-	sitecontentCss: sitecontent + "**/*.css",
-	sitecontentMinCss: sitecontent + "**/*.min.css",
-	concatJsDest: webroot + "js/site.min.js",
-	concatCssDest: webroot + "css/site.min.css",
-	weblib: webroot + "lib/"
+  clientAppFolder: "Scripts/app/",
+  contentFolder: "Content/",
+  webRootFolder: "wwwroot/",
+  webRootLibFolder: "wwwroot/lib/",
+  webRootJsFolder: "wwwroot/js/",
+  webRootCssFolder: "wwwroot/css/"
+
+};
+
+var globs = {
+  js: "**/*.js",
+  minJs: "**/*.min.js",
+  css: "**/*.css",
+  minCss: "**/*.min.css",
+};
+
+var outputFileNames = {
+  siteJs: "site.min.js",
+  siteCss: "site.min.css"
 };
 
 var errrorHandler = function (title) {
-	'use strict';
+  'use strict';
 
-	return function (err) {
-		gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
-		this.emit('end');
-	};
+  return function (err) {
+    gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
+    this.emit('end');
+  };
 }
 
-gulp.task("lint", function () {
-	return gulp.src(paths.js)
-			.pipe(eslint())
-			.pipe(eslint.format())
-			.pipe(eslint.failAfterError());
-});
-
 gulp.task("clean:js", function (cb) {
-	rimraf(paths.concatJsDest, cb);
+  rimraf(paths.webRootJsFolder, cb);
 });
 
 gulp.task("clean:css", function (cb) {
-	rimraf(paths.concatCssDest, cb);
+  rimraf(paths.webRootCssFolder, cb);
 });
 
 gulp.task("clean:weblib", function (cb) {
-	rimraf(paths.weblib, cb);
+  rimraf(paths.webRootLibFolder, cb);
+});
+
+gulp.task("min:css", function () {
+  return gulp.src([
+    paths.contentFolder + globs.css, "!" + paths.contentFolder + globs.minCss,
+    paths.clientAppFolder + globs.css, "!" + paths.clientAppFolder + globs.minCss
+  ])
+    .pipe(concat(outputFileNames.siteCss))
+    .pipe(cssmin())
+    .pipe(gulp.dest(paths.webRootCssFolder));
+});
+
+gulp.task("min:bower", function () {
+  var filterJS = gulpFilter(globs.js, { restore: true });
+
+  return gulp.src("./bower.json")
+      .pipe(mainBowerFiles({
+        overrides: {
+          bootstrap: {
+            main: [
+                './dist/js/bootstrap.js',
+                './dist/css/*.min.*',
+                './dist/fonts/*.*'
+            ]
+          }
+        }
+      }))
+      .pipe(filterJS)
+      .pipe(uglify().on("error", errrorHandler("Uglify")))
+      .pipe(rename({ suffix: ".min" }))
+      .pipe(filterJS.restore)
+      .pipe(gulp.dest(paths.webRootLibFolder));
+});
+
+gulp.task("webpack:bundleAppJs", function (cb) {
+  return gulp.src([paths.clientAppFolder + globs.js, "!" + paths.clientAppFolder + globs.minJs], { base: paths.clientAppFolder })
+    .pipe(webpack(webpackConfig))
+    .pipe(concat(outputFileNames.siteJs))
+    .pipe(gulp.dest(paths.webRootJsFolder));
 });
 
 gulp.task("clean", ["clean:js", "clean:css", "clean:weblib"]);
 
-gulp.task("min:js", function () {
-	return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
-			.pipe(webpack({
-				module: {
-					preLoaders: [{
-						test: /\.jsx?$/,
-						exclude: /node_modules/,
-						loader: "eslint-loader"
-					}],
-					loaders: [{
-						test: /\.jsx?$/,
-						exclude: /node_modules/,
-						loaders: ["ng-annotate", "babel-loader?presets[]=es2015"]
-					}]
-				},
-				output: { filename: "[name].js", devToolLineToLine: true, sourceMapFilename: "[name].js.map", path: __dirname, pathinfo: true },
-				devtool: "#inline-source-map"
-			}))
-			.pipe(concat("site.min.js"))
-			//.pipe(uglify().on("error", errrorHandler("Uglify")))
-			.pipe(gulp.dest("./wwwroot/js/"));
-});
+gulp.task("build", ["min:css", "min:bower", "webpack:bundleAppJs"]);
 
-gulp.task("min:css", function () {
-	return gulp.src([paths.sitecontentCss, "!" + paths.sitecontentMinCss, paths.css, "!" + paths.minCss])
-			.pipe(concat(paths.concatCssDest))
-			.pipe(cssmin())
-			.pipe(gulp.dest("."));
-});
-
-gulp.task("main-bower-files", function () {
-	var filterJS = gulpFilter('**/*.js', { restore: true });
-
-	return gulp.src("./bower.json")
-			.pipe(mainBowerFiles({
-				overrides: {
-					bootstrap: {
-						main: [
-								'./dist/js/bootstrap.js',
-								'./dist/css/*.min.*',
-								'./dist/fonts/*.*'
-						]
-					}
-				}
-			}))
-			.pipe(filterJS)
-			.pipe(uglify().on("error", errrorHandler("Uglify")))
-			.pipe(rename({
-				suffix: ".min"
-			}))
-			.pipe(filterJS.restore)
-			.pipe(gulp.dest(paths.weblib));
-});
-
-gulp.task("min", ["lint", "min:js", "min:css", "main-bower-files"]);
-
-gulp.task("default", function () {
-	gulp.run("min");
-});
+gulp.task("default", ["build"]);

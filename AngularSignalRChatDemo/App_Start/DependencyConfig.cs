@@ -8,14 +8,14 @@ using System.Web.Http;
 
 namespace AngularSignalRChatDemo
 {
-  public static class DependencyConfig
-  {
-    public static void Register(HttpConfiguration configuration)
-    {
-      var container = new ServiceContainer();
-      container.RegisterApiControllers();
-      container.Register<IMessageRepository, MessageRepository>(new PerContainerLifetime());
-      container.EnableWebApi(configuration);
-    }
-  }
+	public static class DependencyConfig
+	{
+		public static void Register(HttpConfiguration configuration)
+		{
+			var container = new ServiceContainer();
+			container.RegisterApiControllers();
+			container.Register<IMessageRepository, MessageRepository>(new PerContainerLifetime());
+			container.EnableWebApi(configuration);
+		}
+	}
 }

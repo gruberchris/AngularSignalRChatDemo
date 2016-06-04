@@ -1,24 +1,30 @@
 ﻿export class MainController {
-  constructor (toastr, InstantMessage, $location, $scope) {
-    'ngInject';
+	constructor (toastr, InstantMessage, MessageStream, $location, $scope) {
+		'ngInject';
 
-    this.toastr = toastr;
-    this.InstantMessage = InstantMessage;
-    this.$location = $location;
-    this.$scope = $scope;
+		this.toastr = toastr;
+		this.InstantMessage = InstantMessage;
+		this.$location = $location;
+		this.$scope = $scope;
 
-    this.messages = InstantMessage.query();
-  }
+		this.messages = InstantMessage.query();
 
-  onSendButtonClick(messageText) {
-    let message = {
-      MessageText: messageText
-    };
+		let myMessages = this.messages;
 
-    let scope = this.$scope;
+		MessageStream.on('addNewMessage', function(newMessage) {
+			myMessages.push(newMessage);
+		})
+	}
 
-    this.InstantMessage.save(message, function() {
-      scope.main.messageText = '';
-    });
-  }
+	onSendButtonClick(messageText) {
+		let message = {
+			MessageText: messageText
+		};
+
+		let scope = this.$scope;
+
+		this.InstantMessage.save(message, function() {
+			scope.main.messageText = '';
+		});
+	}
 }
