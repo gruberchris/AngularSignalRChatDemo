@@ -41,14 +41,20 @@ var outputFileNames = {
   siteCss: "site.min.css"
 };
 
-var errrorHandler = function (title) {
-  'use strict';
+var statusHandler = function (title, callback) {
+  return function (err, stats) {
+    if (err) {
+      throw new gutil.PluginError(title, err);
+    }
 
-  return function (err) {
-    gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
-    this.emit('end');
+    gutil.log("[" + title + "]", stats.toString({
+      colors: true,
+      progress: true
+    }));
+
+    callback();
   };
-}
+};
 
 gulp.task("clean:js", function (cb) {
   rimraf(paths.webRootJsFolder, cb);
@@ -72,7 +78,7 @@ gulp.task("min:css", function () {
     .pipe(gulp.dest(paths.webRootCssFolder));
 });
 
-gulp.task("min:bower", function () {
+gulp.task("min:bower", function (cb) {
   var filterJS = gulpFilter(globs.js, { restore: true });
 
   return gulp.src("./bower.json")
@@ -88,7 +94,7 @@ gulp.task("min:bower", function () {
         }
       }))
       .pipe(filterJS)
-      .pipe(uglify().on("error", errrorHandler("Uglify")))
+      .pipe(uglify().on("error", statusHandler("Uglify", cb)))
       .pipe(rename({ suffix: ".min" }))
       .pipe(filterJS.restore)
       .pipe(gulp.dest(paths.webRootLibFolder));
@@ -96,7 +102,7 @@ gulp.task("min:bower", function () {
 
 gulp.task("webpack:bundleAppJs", function (cb) {
   return gulp.src([paths.clientAppFolder + globs.js, "!" + paths.clientAppFolder + globs.minJs], { base: paths.clientAppFolder })
-    .pipe(webpack(webpackConfig))
+    .pipe(webpack(webpackConfig), statusHandler("Webpack", cb))
     .pipe(concat(outputFileNames.siteJs))
     .pipe(gulp.dest(paths.webRootJsFolder));
 });
