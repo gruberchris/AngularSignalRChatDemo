@@ -178,6 +178,7 @@
     <Content Include=".eslintrc" />
     <Content Include=".editorconfig" />
     <Content Include=".babelrc" />
+    <Content Include="Scripts\app\main\main.css" />
     <Content Include="webpack.config.js" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\app\index.config.js" />

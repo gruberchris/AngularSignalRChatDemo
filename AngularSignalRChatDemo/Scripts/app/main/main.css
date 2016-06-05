@@ -1,0 +1,20 @@
+﻿html, body, .container {
+  height: 100%;
+}
+
+.row {
+  height: 100%;
+  padding-top: 10px;
+}
+
+.col-md-12, .panel {
+  height: 100%;
+}
+
+.fill {
+  width: 100%;
+  height: 85%;
+  min-height: 85%;
+  padding: 10px;
+  overflow: auto;
+}

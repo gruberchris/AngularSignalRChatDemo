@@ -1,49 +1,50 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>@ViewBag.Title - Angular SignalR Chat Demonstration</title>
-		<link rel="stylesheet" href="~/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="~/wwwroot/lib/angular-toastr/dist/angular-toastr.css" />
-		<link rel="stylesheet" href="~/wwwroot/css/site.min.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Angular SignalR Chat Demonstration</title>
+    <link rel="stylesheet" href="~/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/lib/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/site.min.css" />
 </head>
 <body>
-		<div class="navbar navbar-inverse navbar-fixed-top">
-				<div class="container">
-						<div class="navbar-header">
-								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-										<span class="icon-bar"></span>
-										<span class="icon-bar"></span>
-										<span class="icon-bar"></span>
-								</button>
-								@Html.ActionLink("Angular-SignalR Chat Demo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-						</div>
-						<div class="navbar-collapse collapse">
-								<ul class="nav navbar-nav">
-										<li>@Html.ActionLink("Home", "Index", "Home")</li>
-										<li>@Html.ActionLink("About", "About", "Home")</li>
-										<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-								</ul>
-						</div>
-				</div>
-		</div>
-		<div class="container body-content">
-				@RenderBody()
-				<hr />
-				<footer>
-						<p>&copy; @DateTime.Now.Year - Angular SignalR Chat Demonstration</p>
-				</footer>
-		</div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Angular-SignalR Chat Demo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Angular SignalR Chat Demonstration</p>
+        </footer>*@
+    </div>
 
-		<script src="~/wwwroot/lib/jquery/dist/jquery.min.js"></script>
-		<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
-		<script src="~/wwwroot/lib/angular/angular.min.js"></script>
-		<script src="~/wwwroot/lib/angular-route/angular-route.min.js"></script>
-		<script src="~/wwwroot/lib/angular-resource/angular-resource.min.js"></script>
-		<script src="~/wwwroot/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-		<script src="~/wwwroot/lib/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
-		<script src="~/wwwroot/js/site.min.js"></script>
-		@RenderSection("scripts", required: false)
+    <script src="~/wwwroot/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/wwwroot/lib/angular/angular.min.js"></script>
+    <script src="~/wwwroot/lib/angular-route/angular-route.min.js"></script>
+    <script src="~/wwwroot/lib/angular-resource/angular-resource.min.js"></script>
+    <script src="~/wwwroot/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/wwwroot/lib/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+    <script src="~/wwwroot/lib/angular-scroll-glue/src/scrollglue.min.js"></script>
+    <script src="~/wwwroot/js/site.min.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

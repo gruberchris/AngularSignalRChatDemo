@@ -3,7 +3,7 @@ import { config } from './index.config';
 import { routerConfig } from './index.route';
 import { MainController } from './main/main.controller';
 
-angular.module('angularSignalRChatDemo', ['ngRoute', 'ngResource', 'ui.bootstrap', 'toastr'])
+angular.module('angularSignalRChatDemo', ['ngRoute', 'ngResource', 'ui.bootstrap', 'toastr', 'luegg.directives'])
 	.config(config)
 	.config(routerConfig)
 	.factory('InstantMessage', function($resource) {
