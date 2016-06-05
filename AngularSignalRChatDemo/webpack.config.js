@@ -1,8 +1,4 @@
-﻿var webpack = require("webpack");
-
-var debug = process.env.NODE_ENV !== "production";
-
-module.exports = {
+﻿module.exports = {
   module: {
     preLoaders: [{
       test: /\.jsx?$/,
@@ -16,15 +12,6 @@ module.exports = {
     }]
   },
   output: {
-    path: __dirname,
-    // Include comments with information about the modules. Do not use in "production".
-    pathinfo: debug
-  },
-  debug: debug,
-  devtool: debug ? "#inline-source-map" : null,
-  plugins: debug ? [] : [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false })
-  ]
+    path: __dirname
+  }
 };

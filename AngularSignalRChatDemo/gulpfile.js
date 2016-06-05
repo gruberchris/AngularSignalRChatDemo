@@ -7,6 +7,8 @@ Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 
 "use strict";
 
+var debug = process.env.NODE_ENV !== "production";
+
 var gulp = require("gulp"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
@@ -16,8 +18,21 @@ var gulp = require("gulp"),
     gutil = require("gulp-util"),
     gulpFilter = require("gulp-filter"),
     rename = require("gulp-rename"),
-    webpack = require("webpack-stream"),
+    webpack = require("webpack"),
+    webpackStream = require("webpack-stream"),
     webpackConfig = require("./webpack.config.js");
+
+if (debug) {
+  webpackConfig.devtool = "#inline-source-map";
+  webpackConfig.pathinfo = true;
+  webpackConfig.debug = true;
+} else {
+  webpackConfig.plugins = [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false })
+  ];
+}
 
 var paths = {
   clientAppFolder: "Scripts/app/",
@@ -102,7 +117,7 @@ gulp.task("min:bower", function (cb) {
 
 gulp.task("webpack:bundleAppJs", function (cb) {
   return gulp.src([paths.clientAppFolder + globs.js, "!" + paths.clientAppFolder + globs.minJs], { base: paths.clientAppFolder })
-    .pipe(webpack(webpackConfig), statusHandler("Webpack", cb))
+    .pipe(webpackStream(webpackConfig), statusHandler("Webpack", cb))
     .pipe(concat(outputFileNames.siteJs))
     .pipe(gulp.dest(paths.webRootJsFolder));
 });
