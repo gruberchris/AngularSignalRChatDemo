@@ -1,6 +1,6 @@
 ﻿export class MainController {
 	constructor (toastr, InstantMessage, MessageStream, $location, $scope) {
-		'ngInject';
+		"ngInject";
 
 		this.toastr = toastr;
 		this.InstantMessage = InstantMessage;
@@ -11,7 +11,7 @@
 
 		let myMessages = this.messages;
 
-		MessageStream.on('addNewMessage', function(newMessage) {
+		MessageStream.on("addNewMessage", function(newMessage) {
 			myMessages.push(newMessage);
 		})
 	}
@@ -24,7 +24,7 @@
 		let scope = this.$scope;
 
 		this.InstantMessage.save(message, function() {
-			scope.main.messageText = '';
+			scope.main.messageText = "";
 		});
 	}
 }
