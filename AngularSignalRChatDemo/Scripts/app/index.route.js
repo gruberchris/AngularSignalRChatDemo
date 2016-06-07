@@ -1,12 +1,12 @@
 ﻿export function routerConfig ($routeProvider) {
-	'ngInject';
+	"ngInject";
 	$routeProvider
-		.when('/', {
-			templateUrl: 'Scripts/app/main/main.html',
-			controller: 'MainController',
-			controllerAs: 'main'
+		.when("/", {
+			templateUrl: "Scripts/app/main/main.html",
+			controller: "MainController",
+			controllerAs: "main"
 		})
 		.otherwise({
-			redirectTo: '/'
+			redirectTo: "/"
 		});
 }
